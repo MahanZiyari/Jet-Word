@@ -1,7 +1,7 @@
 package com.mahan.compose.jetword.ui.screen
 
-import android.util.Log
-import android.widget.Toast
+
+import android.os.Looper
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -11,13 +11,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.mahan.compose.jetword.SharedViewModel
+import com.mahan.compose.jetword.navigation.Destination
 import com.mahan.compose.jetword.ui.component.LevelButton
 import com.mahan.compose.jetword.util.GameMode
+import java.util.logging.Handler
+
 
 @Composable
 fun HomeScreen(
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
+    navController: NavHostController
 ) {
     val context = LocalContext.current
     Scaffold(
@@ -36,7 +42,9 @@ fun HomeScreen(
                     backgroundColor = MaterialTheme.colors.background,
                     elevation = 4.dp,
                     onClick = {
-                        Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                        viewModel.setupGame(it)
+                        navController.navigate(route = Destination.GameScreen.name)
                     }
                 )
             }

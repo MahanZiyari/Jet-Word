@@ -10,3 +10,24 @@ fun getLevelColor(mode: String): Color {
         else -> Color.Black
     }
 }
+
+fun String.toGameMode(): GameMode {
+    return when (this) {
+        GameMode.Easy.name -> GameMode.Easy
+        GameMode.Medium.name -> GameMode.Medium
+        GameMode.Hard.name -> GameMode.Hard
+        else -> GameMode.Arcade
+    }
+}
+
+fun String.randomize(): String = this.random().toString()
+
+
+fun setQuestionsDot(gameMode: GameMode): Int {
+    return when (gameMode) {
+        GameMode.Easy -> 5
+        GameMode.Medium -> 10
+        GameMode.Hard -> 15
+        else -> 100
+    }
+}

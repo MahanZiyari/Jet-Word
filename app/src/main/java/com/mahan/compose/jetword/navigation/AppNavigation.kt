@@ -4,13 +4,16 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.mahan.compose.jetword.SharedViewModel
 import com.mahan.compose.jetword.ui.screen.GameScreen
 import com.mahan.compose.jetword.ui.screen.HomeScreen
+import com.mahan.compose.jetword.ui.screen.SplashScreen
 
+@ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
 fun AppNavigation(
@@ -20,7 +23,7 @@ fun AppNavigation(
 
     AnimatedNavHost(
         navController = navController,
-        startDestination = Destination.HomeScreen.name
+        startDestination = Destination.SplashScreen.name
     ) {
         composable(route = Destination.HomeScreen.name) {
             HomeScreen(viewModel = viewModel, navController = navController)
@@ -35,6 +38,14 @@ fun AppNavigation(
             // val gameMode = it.arguments?.getString("mode")
             var gameMode by viewModel.selectedMode
             GameScreen(viewModel = viewModel, gameMode = gameMode!!, navController = navController)
+        }
+
+
+        composable(route = Destination.SplashScreen.name) {
+            SplashScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
     }

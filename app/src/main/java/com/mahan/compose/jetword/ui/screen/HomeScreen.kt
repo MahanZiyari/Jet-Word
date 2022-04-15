@@ -2,11 +2,13 @@ package com.mahan.compose.jetword.ui.screen
 
 
 import android.os.Looper
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,6 +27,8 @@ fun HomeScreen(
     viewModel: SharedViewModel,
     navController: NavHostController
 ) {
+    val words by viewModel.allWords
+    Log.d("Words", "${words.data?.size}")
     val context = LocalContext.current
     Scaffold(
         modifier = Modifier.fillMaxSize()

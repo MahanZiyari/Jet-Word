@@ -11,6 +11,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.mahan.compose.jetword.SharedViewModel
 import com.mahan.compose.jetword.ui.screen.GameScreen
 import com.mahan.compose.jetword.ui.screen.HomeScreen
+import com.mahan.compose.jetword.ui.screen.ResultScreen
 import com.mahan.compose.jetword.ui.screen.SplashScreen
 
 @ExperimentalComposeUiApi
@@ -25,24 +26,41 @@ fun AppNavigation(
         navController = navController,
         startDestination = Destination.SplashScreen.name
     ) {
+
+        // Home Screen
         composable(route = Destination.HomeScreen.name) {
             HomeScreen(viewModel = viewModel, navController = navController)
         }
 
 
+        // Game Screen
         composable(
             route = Destination.GameScreen.name
             //route = "${Destination.GameScreen.name}/{mode}",
             //arguments = listOf(navArgument(name = "mode") { type = NavType.StringType })
         ) {
             // val gameMode = it.arguments?.getString("mode")
-            var gameMode by viewModel.selectedMode
-            GameScreen(viewModel = viewModel, gameMode = gameMode!!, navController = navController)
+            val gameMode by viewModel.selectedMode
+            GameScreen(
+                viewModel = viewModel,
+                gameMode = gameMode!!,
+                navController = navController
+            )
         }
 
 
+        // Splash Screen
         composable(route = Destination.SplashScreen.name) {
             SplashScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
+        }
+
+
+        // Result Screen
+        composable(route = Destination.ResultScreen.name) {
+            ResultScreen(
                 viewModel = viewModel,
                 navController = navController
             )

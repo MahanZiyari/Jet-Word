@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahan.compose.jetword.Repository.WordRepository
 import com.mahan.compose.jetword.model.DataOrException
+import com.mahan.compose.jetword.model.Result
 import com.mahan.compose.jetword.util.GameMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -32,9 +33,16 @@ class SharedViewModel @Inject constructor(private val repository: WordRepository
     private var _userText = mutableStateOf("")
     val userText = _userText
 
+    private var _result: MutableState<Result?> = mutableStateOf(null)
+    val result = _result
+
     init {
         getAllWords()
         //getCountedWords()
+    }
+
+    fun setNewResult(newResult: Result) {
+        _result.value = newResult
     }
 
 
@@ -72,6 +80,7 @@ class SharedViewModel @Inject constructor(private val repository: WordRepository
 
 
     fun setupGame(gameMode: GameMode) {
+        _result.value = null
         _selectedMode.value = gameMode
         //getCountedWords()
         settingUpGame(gameMode)
@@ -98,4 +107,6 @@ class SharedViewModel @Inject constructor(private val repository: WordRepository
     fun onUserTextChange(newText: String) {
         _userText.value = newText
     }
+
+
 }

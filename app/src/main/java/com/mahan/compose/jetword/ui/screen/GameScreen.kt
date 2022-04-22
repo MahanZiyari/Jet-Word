@@ -16,8 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mahan.compose.jetword.SharedViewModel
+import com.mahan.compose.jetword.model.Result
+import com.mahan.compose.jetword.navigation.Destination
 import com.mahan.compose.jetword.ui.component.QuestionDot
 import com.mahan.compose.jetword.util.GameMode
+import com.mahan.compose.jetword.util.checkUserAnswer
 
 @ExperimentalComposeUiApi
 @Composable
@@ -37,6 +40,10 @@ fun GameScreen(
                 userText = viewModel.userText.value,
                 onUserTextChanged = {
                     viewModel.onUserTextChange(it)
+                },
+                onGameEnd = {
+                    viewModel.setNewResult(it)
+                    navController.navigate(route = Destination.ResultScreen.name)
                 }
             )
         else
@@ -51,15 +58,25 @@ private fun Content(
     gameMode: GameMode,
     words: List<String>,
     userText: String,
-    onUserTextChanged: (String) -> Unit
+    onUserTextChanged: (String) -> Unit,
+    onGameEnd: (Result) -> Unit
 ) {
 
     var currentIndex by remember {
         mutableStateOf(0)
     }
 
+    var isError by remember {
+        mutableStateOf(false)
+    }
+
+    var currentWordStatus by remember {
+        mutableStateOf(BooleanArray(words.size))
+    }
+
 
     val localKeyboard = LocalSoftwareKeyboardController.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,12 +89,12 @@ private fun Content(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.weight(10f)
         ) {
-            words.forEach {
+            currentWordStatus.forEach {
                 QuestionDot(
                     modifier = Modifier
                         .size(20.dp)
                         .padding(vertical = 2.dp, horizontal = 4.dp),
-                    isCorrect = false
+                    isCorrect = it
                 )
             }
         }
@@ -112,7 +129,8 @@ private fun Content(
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontSize = MaterialTheme.typography.h6.fontSize
-            )
+            ),
+            isError = isError
         )
 
 
@@ -128,8 +146,17 @@ private fun Content(
 
             OutlinedButton(
                 onClick = {
-                    if (currentIndex < words.lastIndex)
+                    onUserTextChanged("")
+                    if (currentIndex < words.lastIndex) {
                         currentIndex++
+                    } else {
+                        val numberOfCorrectAnswers = currentWordStatus.count { it }
+                        val result = Result(
+                            gameMode = gameMode,
+                            numberOfCorrectAnswers = numberOfCorrectAnswers
+                        )
+                        onGameEnd(result)
+                    }
                 },
                 modifier = Modifier
                     .height(48.dp)
@@ -137,11 +164,26 @@ private fun Content(
                     .padding(horizontal = 2.dp),
                 shape = RoundedCornerShape(15.dp)
             ) {
-                Text(text = if (currentIndex != words.lastIndex) "Can't Guess" else "Finish")
+                Text(text = "Can't Guess")
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    if (checkUserAnswer(userText, words[currentIndex])) {
+                        onUserTextChanged("")
+                        currentWordStatus[currentIndex] = true
+                        if (currentIndex < words.lastIndex) {
+                            currentIndex++
+                        } else {
+                            val numberOfCorrectAnswers = currentWordStatus.count { it }
+                            val result = Result(
+                                gameMode = gameMode,
+                                numberOfCorrectAnswers = numberOfCorrectAnswers
+                            )
+                            onGameEnd(result)
+                        }
+                    } else isError = true
+                },
                 modifier = Modifier
                     .height(48.dp)
                     .weight(50f)
@@ -150,7 +192,7 @@ private fun Content(
                 enabled = userText.isNotEmpty()
             ) {
                 Text(
-                    text = "Next",
+                    text = if (currentIndex != words.lastIndex) "Next" else "Finish",
                     style = MaterialTheme.typography.button
                 )
             }
@@ -168,6 +210,7 @@ private fun ContentPreview() {
         gameMode = GameMode.Easy,
         words = arrayListOf("Mahan"),
         userText = "",
-        onUserTextChanged = {}
+        onUserTextChanged = {},
+        onGameEnd = {}
     )
 }

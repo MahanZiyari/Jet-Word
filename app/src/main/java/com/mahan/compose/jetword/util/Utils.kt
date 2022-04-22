@@ -31,3 +31,5 @@ fun setQuestionsDot(gameMode: GameMode): Int {
         else -> 100
     }
 }
+
+fun checkUserAnswer(userAnswer: String, correctAnswer: String): Boolean =  userAnswer == correctAnswer

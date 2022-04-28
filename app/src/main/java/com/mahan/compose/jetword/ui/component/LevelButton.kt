@@ -10,13 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mahan.compose.jetword.util.GameMode
 import com.mahan.compose.jetword.util.getLevelColor
+import java.time.format.TextStyle
 
 @Composable
 fun LevelButton(
@@ -24,13 +27,14 @@ fun LevelButton(
     text: String,
     backgroundColor: Color,
     elevation: Dp,
+    fontWeight: FontWeight = FontWeight.SemiBold,
+    fontSize: TextUnit = 30.sp,
     onClick: () -> Unit = {}
 ) {
+
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .padding(vertical = 4.dp)
+            .height(100.dp)
             .clickable { onClick() },
         backgroundColor = backgroundColor,
         elevation = elevation,
@@ -42,8 +46,8 @@ fun LevelButton(
         ) {
             Text(
                 text = text,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
                 color = getLevelColor(text)
             )
         }

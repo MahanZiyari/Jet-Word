@@ -4,5 +4,6 @@ enum class Destination {
     HomeScreen,
     GameScreen,
     SplashScreen,
-    ResultScreen
+    ResultScreen,
+    AboutScreen
 }

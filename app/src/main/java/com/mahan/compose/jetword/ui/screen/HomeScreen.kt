@@ -127,7 +127,8 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colors.background,
                 elevation = 4.dp,
                 onClick = {
-                    TODO("Navigation To About Screen")
+                    //TODO("Navigation To About Screen")
+                    navController.navigate(route = Destination.AboutScreen.name)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

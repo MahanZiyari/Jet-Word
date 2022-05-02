@@ -9,10 +9,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.mahan.compose.jetword.SharedViewModel
-import com.mahan.compose.jetword.ui.screen.GameScreen
-import com.mahan.compose.jetword.ui.screen.HomeScreen
-import com.mahan.compose.jetword.ui.screen.ResultScreen
-import com.mahan.compose.jetword.ui.screen.SplashScreen
+import com.mahan.compose.jetword.ui.screen.*
 
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
@@ -64,6 +61,14 @@ fun AppNavigation(
                 viewModel = viewModel,
                 navController = navController
             )
+        }
+
+        composable(route = Destination.AboutScreen.name) {
+            AboutScreen {
+                navController.navigate(route = Destination.HomeScreen.name) {
+                    popUpTo(0)
+                }
+            }
         }
 
     }

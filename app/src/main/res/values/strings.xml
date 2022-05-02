@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Jet Word</string>
+
+    <string name="my_bio">
+        Mahan is a young and motive android developer which started this path
+        with learning Java Core\nand then migrating to Kotlin.\nThese days
+        Mahan is focused on Android modern UI development kit, Jetpack Compose.
+    </string>
+
+    <string name="app_info">
+        is a Clean Architecture App and developed by Jetpack Compose to demonstrate Retrofit library.
+    </string>
 </resources>

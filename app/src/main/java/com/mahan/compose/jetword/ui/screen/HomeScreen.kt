@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.mahan.compose.jetword.SharedViewModel
 import com.mahan.compose.jetword.navigation.Destination
+import com.mahan.compose.jetword.ui.component.HelpAlertDialog
 import com.mahan.compose.jetword.ui.component.LevelButton
 import com.mahan.compose.jetword.util.GameMode
 
@@ -26,6 +27,10 @@ fun HomeScreen(
 ) {
 
     val context = LocalContext.current
+
+    var isHelpDialogOpen by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -105,6 +110,10 @@ fun HomeScreen(
 
             // End of Difficulty selection
 
+            HelpAlertDialog(isOpen = isHelpDialogOpen) {
+                isHelpDialogOpen = false
+            }
+
             LevelButton(
                 text = "How To Play",
                 fontWeight = FontWeight.Normal,
@@ -112,7 +121,8 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colors.background,
                 elevation = 4.dp,
                 onClick = {
-                    TODO("Implement Help AlertDialog")
+                    //TODO("Implement Help AlertDialog")
+                    isHelpDialogOpen = true
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -127,7 +137,6 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colors.background,
                 elevation = 4.dp,
                 onClick = {
-                    //TODO("Navigation To About Screen")
                     navController.navigate(route = Destination.AboutScreen.name)
                 },
                 modifier = Modifier

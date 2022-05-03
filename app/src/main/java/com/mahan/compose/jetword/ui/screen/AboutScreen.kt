@@ -1,5 +1,6 @@
 package com.mahan.compose.jetword.ui.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -27,6 +28,16 @@ import com.mahan.compose.jetword.R
 
 @Composable
 fun AboutScreen(navigateToMainMenu: () -> Unit) {
+    BackHandler {
+        navigateToMainMenu()
+    }
+    Content {
+        navigateToMainMenu()
+    }
+}
+
+@Composable
+private fun Content(navigateToMainMenu: () -> Unit) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -146,7 +157,7 @@ fun AboutScreen(navigateToMainMenu: () -> Unit) {
 @Preview
 @Composable
 private fun AboutScreenPreview() {
-    AboutScreen {
+    Content {
 
     }
 }

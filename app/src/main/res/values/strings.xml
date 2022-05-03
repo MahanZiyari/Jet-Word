@@ -10,4 +10,9 @@
     <string name="app_info">
         is a Clean Architecture App and developed by Jetpack Compose to demonstrate Retrofit library.
     </string>
+
+    <string name="app_help">
+        The goal of Jet Word is to guess english words that are already Messed Up.\n
+        \nEasy: 5 words with the maximum length of 4\n\nMedium: 10 words with the maximum length of 8\n\nHard: 15 words with no length limit\n\nArcade Mode: For those who think they are a dictionary
+    </string>
 </resources>

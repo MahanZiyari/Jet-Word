@@ -18,7 +18,9 @@ fun SplashScreen(
 ) {
     val allWords by viewModel.allWords
     if (!allWords.data.isNullOrEmpty()) {
-        navController.navigate(route = Destination.HomeScreen.name)
+        navController.navigate(route = Destination.HomeScreen.name) {
+            popUpTo(0)
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

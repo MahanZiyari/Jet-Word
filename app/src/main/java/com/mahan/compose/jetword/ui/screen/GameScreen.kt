@@ -1,5 +1,6 @@
 package com.mahan.compose.jetword.ui.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -29,6 +30,12 @@ fun GameScreen(
     gameMode: GameMode,
     navController: NavHostController
 ) {
+    BackHandler {
+        //Todo show a AlertDialog to ensure user about leaving
+    }
+
+
+
     val words by viewModel.activeWords
     if (gameMode == GameMode.Arcade) {
 

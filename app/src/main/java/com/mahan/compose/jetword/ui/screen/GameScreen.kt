@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.mahan.compose.jetword.SharedViewModel
 import com.mahan.compose.jetword.model.Result
 import com.mahan.compose.jetword.navigation.Destination
+import com.mahan.compose.jetword.ui.component.LeaveMatchAlertDialog
 import com.mahan.compose.jetword.ui.component.QuestionDot
 import com.mahan.compose.jetword.util.GameMode
 import com.mahan.compose.jetword.util.checkUserAnswer
@@ -30,10 +31,27 @@ fun GameScreen(
     gameMode: GameMode,
     navController: NavHostController
 ) {
+
+    var isAlertDialogOpen by remember {
+        mutableStateOf(false)
+    }
     BackHandler {
         //Todo show a AlertDialog to ensure user about leaving
+        isAlertDialogOpen = true
     }
 
+    LeaveMatchAlertDialog(
+        isOpen = isAlertDialogOpen,
+        onConfirm = {
+            isAlertDialogOpen = false
+            navController.navigate(route = Destination.HomeScreen.name) {
+                popUpTo(0)
+            }
+        },
+        onDismissRequest = {
+            isAlertDialogOpen = false
+        }
+    )
 
 
     val words by viewModel.activeWords

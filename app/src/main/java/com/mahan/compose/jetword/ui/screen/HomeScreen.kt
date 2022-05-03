@@ -121,7 +121,6 @@ fun HomeScreen(
                 backgroundColor = MaterialTheme.colors.background,
                 elevation = 4.dp,
                 onClick = {
-                    //TODO("Implement Help AlertDialog")
                     isHelpDialogOpen = true
                 },
                 modifier = Modifier
